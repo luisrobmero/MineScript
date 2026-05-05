@@ -3,70 +3,101 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jahmai Cabrera | Embedded Systems Portfolio</title>
+  <title>MineScript | Programming Language Project</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header class="hero">
-    <h1>Jahmai Cabrera</h1>
-    <p>Computer Science Student @ SDSU</p>
-    <p>Embedded Systems • Firmware • C/C++ • STM32 • Arduino</p>
+    <h1>MineScript</h1>
+    <p>A Minecraft-inspired programming language for learning code through game-like commands.</p>
 
-    <div class="links">
-      <a href="https://github.com/Fresht0Death" target="_blank">GitHub</a>
-      <a href="#" target="_blank">LinkedIn</a>
-      <a href="#" target="_blank">Resume</a>
+    <div class="button-row">
+      <a href="https://github.com/luisrobmero/MineScript" target="_blank">View GitHub Repo</a>
+      <a href="#examples">See Examples</a>
     </div>
   </header>
 
-  <section class="about">
-    <h2>About Me</h2>
-    <p>
-      I am a Computer Science student at San Diego State University focused on
-      embedded systems and firmware engineering. I build low-level projects using
-      C, C++, Arduino, STM32, registers, interrupts, timers, ADC, UART, and bare-metal
-      programming concepts.
-    </p>
-  </section>
-
-  <section class="featured">
-    <h2>Featured Projects</h2>
-
-    <div class="project-card">
-      <h3>Bare Metal STM32 Programming</h3>
+  <main>
+    <section>
+      <h2>What is MineScript?</h2>
       <p>
-        Register-level STM32 projects using CMSIS, GPIO, SysTick, ADC, UART,
-        timers, and interrupts.
+        MineScript is a conceptual programming language inspired by Minecraft.
+        Instead of using traditional programming words like <code>if</code>,
+        <code>while</code>, and <code>print</code>, the language uses commands
+        that feel more like actions in a game world.
       </p>
-      <p><strong>Tech:</strong> C, STM32, CMSIS, Embedded Systems</p>
-      <a href="https://github.com/Fresht0Death/Bare_Metal_Programming" target="_blank">
-        View Project
-      </a>
-    </div>
-
-    <div class="project-card">
-      <h3>Firmware Portfolio</h3>
       <p>
-        Arduino-based embedded projects including sensors, LEDs, potentiometers,
-        mood lighting, and interactive hardware experiments.
+        The goal is to make programming concepts easier to visualize by connecting
+        code to movement, actions, inventory, and world-building.
       </p>
-      <p><strong>Tech:</strong> Arduino, C/C++, Sensors, GPIO</p>
-      <a href="https://github.com/Fresht0Death/Firmware-Portfolio" target="_blank">
-        View Project
-      </a>
-    </div>
-  </section>
+    </section>
 
-  <section class="github-section">
-    <h2>GitHub Repositories</h2>
-    <div id="repo-container" class="repo-grid"></div>
-  </section>
+    <section>
+      <h2>Project Goal</h2>
+      <p>
+        This project was built to explore how programming languages can be designed
+        around familiar systems. MineScript uses a Minecraft-style theme to help
+        beginners understand syntax, logic, variables, conditions, and loops.
+      </p>
+    </section>
+
+    <section>
+      <h2>Core Concepts</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Variables</h3>
+          <p>Variables can represent items, blocks, tools, or values stored by the player.</p>
+        </div>
+
+        <div class="card">
+          <h3>Conditionals</h3>
+          <p>Conditional logic can be represented as checking the world before taking action.</p>
+        </div>
+
+        <div class="card">
+          <h3>Loops</h3>
+          <p>Loops can repeat mining, moving, crafting, or checking actions.</p>
+        </div>
+
+        <div class="card">
+          <h3>Output</h3>
+          <p>Program output can be shown as text, movement, or a visual story-like result.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="examples">
+      <h2>Example Program</h2>
+
+      <pre><code>begin
+  set position 3 1
+  say position
+  move north 2
+  mine block
+  craft torch
+end</code></pre>
+
+      <p>
+        This kind of program can be interpreted as a sequence of game actions,
+        making the logic easier to understand visually.
+      </p>
+    </section>
+
+    <section>
+      <h2>Why It Matters</h2>
+      <p>
+        MineScript shows how programming language design can be used as a teaching tool.
+        By replacing abstract syntax with familiar game actions, students can focus on
+        understanding the logic behind programming instead of getting stuck on syntax first.
+      </p>
+    </section>
+  </main>
 
   <footer>
-    <p>Built by Jahmai Cabrera</p>
+    <p>MineScript Programming Language Project</p>
   </footer>
 
-  <script src="script.js"></script>
 </body>
 </html>

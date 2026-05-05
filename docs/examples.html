@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MineScript Examples</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="hero small-hero">
+    <h1>MineScript Examples</h1>
+    <p>Example programs written in our Minecraft-inspired programming language.</p>
+
+    <div class="button-row">
+      <a href="index.html">Back to Home</a>
+      <a href="https://github.com/luisrobmero/MineScript" target="_blank">GitHub Source Code</a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>About the Language</h2>
+      <p>
+        MineScript is a simple custom programming language inspired by Minecraft.
+        The language uses game-like commands to help make programming concepts
+        easier to understand. The interpreter is written in Python and runs
+        MineScript programs stored in <code>.ms</code> files.
+      </p>
+    </section>
+
+    <section>
+      <h2>Greeting Program</h2>
+      <p>
+        This program demonstrates basic output in MineScript.
+      </p>
+
+      <pre><code># greetingProgram.ms
+
+say "Welcome to MineScript!"
+say "A Minecraft-inspired programming language."</code></pre>
+    </section>
+
+    <section>
+      <h2>FizzBuzz Program</h2>
+      <p>
+        This program demonstrates conditional logic and repeated output.
+      </p>
+
+      <pre><code># fizzBuzz.ms
+
+repeat 1 to 20
+  if number divisible by 3 and 5
+    say "FizzBuzz"
+  else if number divisible by 3
+    say "Fizz"
+  else if number divisible by 5
+    say "Buzz"
+  else
+    say number</code></pre>
+    </section>
+
+    <section>
+      <h2>Combat Simulator</h2>
+      <p>
+        This program shows how MineScript can represent a simple game-like battle.
+      </p>
+
+      <pre><code># combatSimulator.ms
+
+spawn player
+spawn zombie
+
+player attack zombie
+if zombie health less than 1
+  say "Zombie defeated!"
+else
+  zombie attack player</code></pre>
+    </section>
+
+    <section>
+      <h2>Story Program</h2>
+      <p>
+        This program shows how MineScript can create a short story sequence.
+      </p>
+
+      <pre><code># story.ms
+
+say "The player wakes up in a dark cave."
+move forward
+mine stone
+craft torch
+say "The cave lights up."</code></pre>
+    </section>
+
+    <section>
+      <h2>Running the Interpreter</h2>
+      <p>
+        The interpreter is included in the GitHub repository as <code>minescript.py</code>.
+        Example commands:
+      </p>
+
+      <pre><code>python3 minescript.py greetingProgram.ms
+python3 minescript.py fizzBuzz.ms
+python3 minescript.py combatSimulator.ms
+python3 minescript.py story.ms</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>MineScript Programming Language Project</p>
+  </footer>
+
+</body>
+</html>
