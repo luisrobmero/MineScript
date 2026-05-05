@@ -10,7 +10,7 @@
 
   <header class="hero small-hero">
     <h1>MineScript Examples</h1>
-    <p>Example programs written in our Minecraft-inspired programming language.</p>
+    <p>Program examples written in our Minecraft-inspired programming language.</p>
 
     <div class="button-row">
       <a href="index.html">Back to Home</a>
@@ -20,90 +20,187 @@
 
   <main>
     <section>
-      <h2>About the Language</h2>
+      <h2>Language Overview</h2>
       <p>
-        MineScript is a simple custom programming language inspired by Minecraft.
-        The language uses game-like commands to help make programming concepts
-        easier to understand. The interpreter is written in Python and runs
-        MineScript programs stored in <code>.ms</code> files.
+        MineScript is a Minecraft-style RPG programming language designed to make programming more engaging
+        for beginners. The language is object-oriented, interpreted, and runs sequentially. Steve is the main
+        player object, while mobs and optional player characters can also be created.
+      </p>
+
+      <p>
+        The language replaces common programming structures with game-inspired syntax. For example,
+        <code>Steve.encounter(condition)</code> works like an if statement, <code>Steve.mine(condition)</code>
+        works like a while loop, and <code>Steve.loot(init, condition, increment)</code> works like a for loop.
+        Slash commands such as <code>/chat</code>, <code>/attack</code>, <code>/sleep</code>, and <code>/eat</code>
+        act like built-in functions.
       </p>
     </section>
 
     <section>
-      <h2>Greeting Program</h2>
-      <p>
-        This program demonstrates basic output in MineScript.
-      </p>
+      <h2>Core Syntax</h2>
 
-      <pre><code># greetingProgram.ms
+      <div class="grid">
+        <div class="card">
+          <h3>Main Player Object</h3>
+          <pre><code>Steve(HP, Attack, Armor)</code></pre>
+        </div>
 
-say "Welcome to MineScript!"
-say "A Minecraft-inspired programming language."</code></pre>
+        <div class="card">
+          <h3>Mob Object</h3>
+          <pre><code>Creeper(HP, Attack)</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>If / Else</h3>
+          <pre><code>Steve.encounter(condition) {
+  /chat "true path"
+} otherwise {
+  /chat "false path"
+}</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>While Loop</h3>
+          <pre><code>Steve.mine(condition) {
+  /chat "looping"
+}</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>For Loop</h3>
+          <pre><code>Steve.loot(i = 1, i <= 100, i++) {
+  /chat i
+}</code></pre>
+        </div>
+
+        <div class="card">
+          <h3>Output</h3>
+          <pre><code>/chat "Hello world"
+/chat Steve.hp</code></pre>
+        </div>
+      </div>
     </section>
 
     <section>
-      <h2>FizzBuzz Program</h2>
+      <h2>Example 1: Combat Simulator</h2>
       <p>
-        This program demonstrates conditional logic and repeated output.
+        This example creates Steve and a Creeper, then uses a while loop to keep attacking until the Creeper's HP
+        reaches zero. It demonstrates objects, loops, conditionals, and slash commands.
       </p>
 
-      <pre><code># fizzBuzz.ms
+      <pre><code>#define player and mob objects
+Steve(20, 10, 5)
+Creeper(15, 8)
 
-repeat 1 to 20
-  if number divisible by 3 and 5
-    say "FizzBuzz"
-  else if number divisible by 3
-    say "Fizz"
-  else if number divisible by 5
-    say "Buzz"
-  else
-    say number</code></pre>
+#While loop: Fights until Creeper HP reaches 0
+Steve.mine(Creeper.hp > 0) {
+  /attack Steve Creeper
+  /attack Creeper Steve
+  /chat Creeper.hp
+  /chat Steve.hp
+}
+
+#Determine the winner and create output
+Steve.encounter(Creeper.hp <= 0) {
+  /chat "Steve wins!"
+} otherwise {
+  /chat "Creeper wins!"
+}</code></pre>
+
+      <h3>Expected Terminal Output</h3>
+      <pre><code>Steve mines his way to a Creeper
+Creeper's HP is reduced to 0
+Steve wins!</code></pre>
     </section>
 
     <section>
-      <h2>Combat Simulator</h2>
+      <h2>Example 2: Greeting Program</h2>
       <p>
-        This program shows how MineScript can represent a simple game-like battle.
+        This example defines Steve and two optional player characters. The higher-level player greets the lower-level
+        player using a user-defined slash command.
       </p>
 
-      <pre><code># combatSimulator.ms
+      <pre><code>#Define Player objects
+Steve(20, 10, 5)
+Alex("Alex", 5)
+Jordan("Jordan", 10)
 
-spawn player
-spawn zombie
+#Define Greet Function
+/greet greeter receiver {
+  /chat greeter.name
+  /chat "greets"
+  /chat receiver.name
+  /chat "Welcome, traveler!"
+}
 
-player attack zombie
-if zombie health less than 1
-  say "Zombie defeated!"
-else
-  zombie attack player</code></pre>
+#Higher level player will greet other players
+Steve.encounter(Alex.level > Jordan.level) {
+  /greet Alex Jordan
+} otherwise {
+  /greet Jordan Alex
+}</code></pre>
+
+      <h3>Expected Terminal Output</h3>
+      <pre><code>Jordan greets Alex
+Welcome, traveler!</code></pre>
     </section>
 
     <section>
-      <h2>Story Program</h2>
+      <h2>Example 3: FizzBuzz</h2>
       <p>
-        This program shows how MineScript can create a short story sequence.
+        This example shows a classic FizzBuzz program using MineScript's for-loop structure,
+        nested conditionals, modulo operations, and terminal output.
       </p>
 
-      <pre><code># story.ms
+      <pre><code>#Start the program
+Steve(20, 10, 5)
 
-say "The player wakes up in a dark cave."
-move forward
-mine stone
-craft torch
-say "The cave lights up."</code></pre>
+#Iterate through the desired interval
+Steve.loot(i = 1, i <= 100, i++) {
+  Steve.encounter((i % 15) == 0) {
+    /chat "FizzBuzz"
+  } otherwise {
+    Steve.encounter((i % 3) == 0) {
+      /chat "Fizz"
+    } otherwise {
+      Steve.encounter((i % 5) == 0) {
+        /chat "Buzz"
+      } otherwise {
+        /chat i
+      }
+    }
+  }
+}</code></pre>
+
+      <h3>Expected Terminal Output</h3>
+      <pre><code>1
+2
+Fizz
+4
+Buzz
+Fizz
+7
+8
+Fizz
+Buzz
+11
+Fizz
+13
+14
+FizzBuzz
+...</code></pre>
     </section>
 
     <section>
       <h2>Running the Interpreter</h2>
       <p>
-        The interpreter is included in the GitHub repository as <code>minescript.py</code>.
-        Example commands:
+        The MineScript interpreter is written in Python and included in the GitHub repository as
+        <code>minescript.py</code>. Example programs are stored as <code>.ms</code> files.
       </p>
 
-      <pre><code>python3 minescript.py greetingProgram.ms
-python3 minescript.py fizzBuzz.ms
-python3 minescript.py combatSimulator.ms
-python3 minescript.py story.ms</code></pre>
+      <pre><code>python3 minescript.py combatSimulator.ms
+python3 minescript.py greetingProgram.ms
+python3 minescript.py fizzBuzz.ms</code></pre>
     </section>
   </main>
 
