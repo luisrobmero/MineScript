@@ -87,3 +87,12 @@
     background: #111827;
     color: #94a3b8;
   }
+
+  .example-image {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 12px;
+    border: 1px solid #334155;
+  }
