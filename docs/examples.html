@@ -9,91 +9,36 @@
 <body>
 
   <header class="hero small-hero">
-    <h1>MineScript Examples</h1>
-    <p>Program examples written in our Minecraft-inspired programming language.</p>
+    <div class="hero-content">
+      <p class="eyebrow">MineScript Program Examples</p>
+      <h1>Code Examples</h1>
+      <p class="hero-subtitle">
+        Real MineScript programs showing objects, loops, conditionals, functions, slash commands, and terminal narration.
+      </p>
 
-    <div class="button-row">
-      <a href="index.html">Back to Home</a>
-      <a href="https://github.com/luisrobmero/MineScript" target="_blank">GitHub Source Code</a>
+      <div class="button-row">
+        <a href="index.html">Back to Home</a>
+        <a href="https://github.com/luisrobmero/MineScript" target="_blank">GitHub Source Code</a>
+      </div>
     </div>
   </header>
 
   <main>
-    <section>
-      <h2>Language Overview</h2>
-      <p>
-        MineScript is a Minecraft-style RPG programming language designed to make programming more engaging
-        for beginners. The language is object-oriented, interpreted, and runs sequentially. Steve is the main
-        player object, while mobs and optional player characters can also be created.
-      </p>
+
+    <section class="example-section">
+      <h2>Example 1: Combat Simulator</h2>
 
       <p>
-        The language replaces common programming structures with game-inspired syntax. For example,
-        <code>Steve.encounter(condition)</code> works like an if statement, <code>Steve.mine(condition)</code>
-        works like a while loop, and <code>Steve.loot(init, condition, increment)</code> works like a for loop.
-        Slash commands such as <code>/chat</code>, <code>/attack</code>, <code>/sleep</code>, and <code>/eat</code>
-        act like built-in functions.
-      </p>
-    </section>
-
-    <section>
-      <h2>Core Syntax</h2>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Main Player Object</h3>
-          <pre><code>Steve(HP, Attack, Armor)</code></pre>
-        </div>
-
-        <div class="card">
-          <h3>Mob Object</h3>
-          <pre><code>Creeper(HP, Attack)</code></pre>
-        </div>
-
-        <div class="card">
-          <h3>If / Else</h3>
-          <pre><code>Steve.encounter(condition) {
-  /chat "true path"
-} otherwise {
-  /chat "false path"
-}</code></pre>
-        </div>
-
-        <div class="card">
-          <h3>While Loop</h3>
-          <pre><code>Steve.mine(condition) {
-  /chat "looping"
-}</code></pre>
-        </div>
-
-        <div class="card">
-          <h3>For Loop</h3>
-          <pre><code>Steve.loot(i = 1, i <= 100, i++) {
-  /chat i
-}</code></pre>
-        </div>
-
-        <div class="card">
-          <h3>Output</h3>
-          <pre><code>/chat "Hello world"
-/chat Steve.hp</code></pre>
-        </div>
-      </div>
-    </section>
-
-    <section>
-        
-      <p>
-        <img src="images/combat-simulator.png" alt="Combat Simulator scene" class="example-image">
-        This example creates Steve and a Creeper, then uses a while loop to keep attacking until the Creeper's HP
-        reaches zero. It demonstrates objects, loops, conditionals, and slash commands.
+        This program creates Steve and a Creeper, then uses a combat loop to attack until the Creeper's
+        HP reaches zero. It demonstrates object creation, while-loop behavior, slash commands, automatic
+        damage calculation, and if/else logic.
       </p>
 
-      <pre><code>#define player and mob objects
-Steve(20, 10, 5)
+      <img src="images/combat-simulator.png" alt="Minecraft-style scene of Steve fighting a Creeper" class="example-image">
+
+      <pre><code>Steve(20, 10, 5)
 Creeper(15, 8)
 
-#While loop: Fights until Creeper HP reaches 0
 Steve.mine(Creeper.hp > 0) {
   /attack Steve Creeper
   /attack Creeper Steve
@@ -101,33 +46,44 @@ Steve.mine(Creeper.hp > 0) {
   /chat Steve.hp
 }
 
-#Determine the winner and create output
 Steve.encounter(Creeper.hp <= 0) {
   /chat "Steve wins!"
 } otherwise {
   /chat "Creeper wins!"
 }</code></pre>
 
-      <h3>Expected Terminal Output</h3>
-      <pre><code>Steve mines his way to a Creeper
-Creeper's HP is reduced to 0
+      <h3>What this demonstrates</h3>
+      <ul>
+        <li><code>Steve(20, 10, 5)</code> creates the main player with HP, attack, and armor.</li>
+        <li><code>Creeper(15, 8)</code> creates a mob with HP and attack.</li>
+        <li><code>Steve.mine(...)</code> works like a while loop.</li>
+        <li><code>/attack</code> handles combat and HP changes.</li>
+        <li><code>Steve.encounter(...)</code> works like an if statement.</li>
+      </ul>
+
+      <h3>Expected Output</h3>
+      <pre><code>[MineScript] Steve has entered the world.
+Creeper HP: 5
+Steve HP: 17
+Creeper HP: 0
+Steve HP: 14
 Steve wins!</code></pre>
     </section>
 
-    <section>
+    <section class="example-section">
       <h2>Example 2: Greeting Program</h2>
+
       <p>
-        <img src="images/greeting-program.png" alt="Greeting Program scene" class="example-image">
-        This example defines Steve and two optional player characters. The higher-level player greets the lower-level
-        player using a user-defined slash command.
+        This program creates optional player objects and defines a custom slash command called
+        <code>/greet</code>. It uses a conditional to decide which player should greet the other.
       </p>
 
-      <pre><code>#Define Player objects
-Steve(20, 10, 5)
+      <img src="images/greeting-program.png" alt="Minecraft-style scene of two players greeting each other" class="example-image">
+
+      <pre><code>Steve(20, 10, 5)
 Alex("Alex", 5)
 Jordan("Jordan", 10)
 
-#Define Greet Function
 /greet greeter receiver {
   /chat greeter.name
   /chat "greets"
@@ -135,30 +91,42 @@ Jordan("Jordan", 10)
   /chat "Welcome, traveler!"
 }
 
-#Higher level player will greet other players
 Steve.encounter(Alex.level > Jordan.level) {
   /greet Alex Jordan
 } otherwise {
   /greet Jordan Alex
 }</code></pre>
 
-      <h3>Expected Terminal Output</h3>
-      <pre><code>Jordan greets Alex
+      <h3>What this demonstrates</h3>
+      <ul>
+        <li>Optional player objects with names and levels.</li>
+        <li>Dot notation such as <code>Alex.level</code> and <code>Jordan.level</code>.</li>
+        <li>User-defined slash commands.</li>
+        <li>Function parameters through <code>greeter</code> and <code>receiver</code>.</li>
+        <li>Conditional execution using <code>Steve.encounter</code>.</li>
+      </ul>
+
+      <h3>Expected Output</h3>
+      <pre><code>[MineScript] Steve has entered the world.
+Jordan
+greets
+Alex
 Welcome, traveler!</code></pre>
     </section>
 
-    <section>
+    <section class="example-section">
       <h2>Example 3: FizzBuzz</h2>
+
       <p>
-        <img src="images/fizzbuzz.png" alt="FizzBuzz scene" class="example-image">
-        This example shows a classic FizzBuzz program using MineScript's for-loop structure,
-        nested conditionals, modulo operations, and terminal output.
+        This program solves the classic FizzBuzz problem using MineScript syntax.
+        It demonstrates <code>Steve.loot</code> as a for loop, nested conditionals,
+        modulo operations, and terminal output.
       </p>
 
-      <pre><code>#Start the program
-Steve(20, 10, 5)
+      <img src="images/fizzbuzz.png" alt="Minecraft-style scene showing FizzBuzz number blocks" class="example-image">
 
-#Iterate through the desired interval
+      <pre><code>Steve(20, 10, 5)
+
 Steve.loot(i = 1, i <= 100, i++) {
   Steve.encounter((i % 15) == 0) {
     /chat "FizzBuzz"
@@ -175,8 +143,17 @@ Steve.loot(i = 1, i <= 100, i++) {
   }
 }</code></pre>
 
-      <h3>Expected Terminal Output</h3>
-      <pre><code>1
+      <h3>What this demonstrates</h3>
+      <ul>
+        <li><code>Steve.loot(i = 1, i <= 100, i++)</code> behaves like a for loop.</li>
+        <li><code>%</code> is used for modulo checks.</li>
+        <li>Nested <code>Steve.encounter</code> blocks create if/else-if logic.</li>
+        <li><code>/chat</code> prints numbers or strings to the terminal.</li>
+      </ul>
+
+      <h3>Expected Output</h3>
+      <pre><code>[MineScript] Steve has entered the world.
+1
 2
 Fizz
 4
@@ -194,21 +171,46 @@ FizzBuzz
 ...</code></pre>
     </section>
 
-    <section>
-      <h2>Running the Interpreter</h2>
+    <section class="example-section">
+      <h2>Example 4: Full Story Program</h2>
+
       <p>
-        The MineScript interpreter is written in Python and included in the GitHub repository as
-        <code>minescript.py</code>. Example programs are stored as <code>.ms</code> files.
+        The repository also includes a larger story program. This example is meant to show the long-term
+        vision for MineScript: writing code that behaves like a playable Minecraft-style adventure.
       </p>
 
-      <pre><code>python3 minescript.py combatSimulator.ms
-python3 minescript.py greetingProgram.ms
-python3 minescript.py fizzBuzz.ms</code></pre>
+      <pre><code>python3 minescript.py story.ms</code></pre>
+
+      <p>
+        The story program is the best candidate for the storyboard/image-generation feature because it
+        can produce a sequence of events that can be turned into comic-style panels.
+      </p>
+
+      <div class="button-row left">
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/story.ms" target="_blank">View story.ms</a>
+      </div>
     </section>
+
+    <section class="example-section">
+      <h2>Source Files</h2>
+
+      <p>
+        The full interpreter and sample programs are available in the GitHub repository.
+      </p>
+
+      <div class="button-grid">
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/minescript.py" target="_blank">Interpreter</a>
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/combatSimulator.ms" target="_blank">Combat Simulator</a>
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/greetingProgram.ms" target="_blank">Greeting Program</a>
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/fizzBuzz.ms" target="_blank">FizzBuzz</a>
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/story.ms" target="_blank">Story Program</a>
+      </div>
+    </section>
+
   </main>
 
   <footer>
-    <p>MineScript Programming Language Project</p>
+    <p>MineScript Code Examples</p>
   </footer>
 
 </body>
