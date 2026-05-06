@@ -3,95 +3,185 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MineScript | Programming Language Project</title>
+  <title>MineScript | Minecraft-Inspired Programming Language</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <header class="hero">
-    <h1>MineScript</h1>
-    <p>A Minecraft-inspired programming language for learning code through game-like commands.</p>
+    <div class="hero-content">
+      <p class="eyebrow">Custom Programming Language Project</p>
+      <h1>MineScript</h1>
+      <p class="hero-subtitle">
+        A Minecraft-inspired programming language that turns code into a text-based RPG adventure.
+      </p>
 
-    <div class="button-row">
-      <a href="https://github.com/luisrobmero/MineScript" target="_blank">View GitHub Repo</a>
-      <a href="#examples">See Examples</a>
+      <div class="button-row">
+        <a href="examples.html">See Examples</a>
+        <a href="https://github.com/luisrobmero/MineScript" target="_blank">View GitHub Repo</a>
+      </div>
     </div>
   </header>
 
   <main>
-    <section>
+    <section class="section-card">
       <h2>What is MineScript?</h2>
       <p>
-        MineScript is a conceptual programming language inspired by Minecraft.
-        Instead of using traditional programming words like <code>if</code>,
-        <code>while</code>, and <code>print</code>, the language uses commands
-        that feel more like actions in a game world.
+        MineScript is a Minecraft-themed programming language designed to make programming more fun,
+        visual, and beginner-friendly. Instead of writing programs with only traditional keywords,
+        users write code as actions performed by Steve, mobs, and player objects.
       </p>
+
       <p>
-        The goal is to make programming concepts easier to visualize by connecting
-        code to movement, actions, inventory, and world-building.
+        Programs are written in <code>.ms</code> files and executed by a Python interpreter called
+        <code>minescript.py</code>. The output is text-based narration in the terminal, making the
+        program feel like a small RPG adventure.
+      </p>
+    </section>
+
+    <section class="section-card">
+      <h2>Project Purpose</h2>
+      <p>
+        The goal of MineScript is to help beginners understand core programming concepts through a
+        familiar game-inspired framework. Concepts like variables, conditionals, loops, objects,
+        functions, and output are mapped to Minecraft-style commands.
       </p>
     </section>
 
     <section>
-      <h2>Project Goal</h2>
-      <p>
-        This project was built to explore how programming languages can be designed
-        around familiar systems. MineScript uses a Minecraft-style theme to help
-        beginners understand syntax, logic, variables, conditions, and loops.
-      </p>
-    </section>
-
-    <section>
-      <h2>Core Concepts</h2>
+      <h2>Language Features</h2>
 
       <div class="grid">
         <div class="card">
-          <h3>Variables</h3>
-          <p>Variables can represent items, blocks, tools, or values stored by the player.</p>
+          <h3>Object-Oriented Design</h3>
+          <p>
+            <code>Steve</code> is the main object. Mobs and optional players can also be created
+            with their own attributes.
+          </p>
         </div>
 
         <div class="card">
-          <h3>Conditionals</h3>
-          <p>Conditional logic can be represented as checking the world before taking action.</p>
+          <h3>Python Interpreter</h3>
+          <p>
+            <code>minescript.py</code> reads <code>.ms</code> files and executes each line as
+            MineScript code.
+          </p>
         </div>
 
         <div class="card">
-          <h3>Loops</h3>
-          <p>Loops can repeat mining, moving, crafting, or checking actions.</p>
+          <h3>Terminal Narration</h3>
+          <p>
+            Programs produce story-like output in the terminal using commands such as
+            <code>/chat</code> and <code>/attack</code>.
+          </p>
         </div>
 
         <div class="card">
-          <h3>Output</h3>
-          <p>Program output can be shown as text, movement, or a visual story-like result.</p>
+          <h3>RPG Syntax</h3>
+          <p>
+            Programming structures are renamed with game terms like
+            <code>encounter</code>, <code>mine</code>, and <code>loot</code>.
+          </p>
         </div>
       </div>
     </section>
 
-    <section id="examples">
-      <h2>Example Program</h2>
+    <section>
+      <h2>Core Syntax</h2>
 
-      <pre><code>begin
-  set position 3 1
-  say position
-  move north 2
-  mine block
-  craft torch
-end</code></pre>
+      <div class="syntax-table">
+        <div>
+          <h3>Main Player</h3>
+          <pre><code>Steve(HP, Attack, Armor)</code></pre>
+        </div>
+
+        <div>
+          <h3>Mob Object</h3>
+          <pre><code>Creeper(HP, Attack)</code></pre>
+        </div>
+
+        <div>
+          <h3>Integer Variable</h3>
+          <pre><code>Steve.carry(identifier, value)</code></pre>
+        </div>
+
+        <div>
+          <h3>String Variable</h3>
+          <pre><code>Steve.nametag(identifier, "value")</code></pre>
+        </div>
+
+        <div>
+          <h3>If / Else</h3>
+          <pre><code>Steve.encounter(condition) {
+  /chat "true path"
+} otherwise {
+  /chat "false path"
+}</code></pre>
+        </div>
+
+        <div>
+          <h3>While Loop</h3>
+          <pre><code>Steve.mine(condition) {
+  /chat "looping"
+}</code></pre>
+        </div>
+
+        <div>
+          <h3>For Loop</h3>
+          <pre><code>Steve.loot(i = 1, i <= 10, i++) {
+  /chat i
+}</code></pre>
+        </div>
+
+        <div>
+          <h3>Output</h3>
+          <pre><code>/chat "Hello world"
+/chat Steve.hp</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>How to Run a MineScript Program</h2>
+      <p>
+        The interpreter is included in the GitHub repository. To run a program, use Python 3 and pass
+        the <code>.ms</code> file as an argument.
+      </p>
+
+      <pre><code>python3 minescript.py combatSimulator.ms
+python3 minescript.py greetingProgram.ms
+python3 minescript.py fizzBuzz.ms</code></pre>
+
+      <div class="button-row left">
+        <a href="https://github.com/luisrobmero/MineScript/blob/main/minescript.py" target="_blank">View Interpreter</a>
+        <a href="examples.html">View Code Examples</a>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <h2>Storyboard / Image Generation Extension</h2>
+      <p>
+        MineScript also explores an image-based storytelling extension. The idea is that the terminal
+        narration from a MineScript program can be converted into visual storyboard panels, making the
+        code feel even more like a Minecraft adventure.
+      </p>
 
       <p>
-        This kind of program can be interpreted as a sequence of game actions,
-        making the logic easier to understand visually.
+        For example, a combat program can become a panel showing Steve fighting a Creeper, while a
+        FizzBuzz program can become a visual number-block puzzle.
       </p>
     </section>
 
-    <section>
-      <h2>Why It Matters</h2>
-      <p>
-        MineScript shows how programming language design can be used as a teaching tool.
-        By replacing abstract syntax with familiar game actions, students can focus on
-        understanding the logic behind programming instead of getting stuck on syntax first.
-      </p>
+    <section class="section-card">
+      <h2>Assignment Links</h2>
+
+      <div class="link-box">
+        <p><strong>Live Website Link:</strong></p>
+        <p><a href="https://luisrobmero.github.io/MineScript/" target="_blank">https://luisrobmero.github.io/MineScript/</a></p>
+
+        <p><strong>Git Source Code Link:</strong></p>
+        <p><a href="https://github.com/luisrobmero/MineScript" target="_blank">https://github.com/luisrobmero/MineScript</a></p>
+      </div>
     </section>
   </main>
 
