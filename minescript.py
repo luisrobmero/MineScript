@@ -5,6 +5,11 @@ import random
 # ─── Object Storage ────────────────────────────────────────────────────────
 objects = {}     # stores all defined objects
 variables = {}   # stores carry/nametag variables
+return_value = None
+
+class ReturnException(Exception):
+    def __init__(self, value):
+        self.value = value
 
 # ─── Object Definitions ────────────────────────────────────────────────────
 def define_object(name, args):
@@ -37,14 +42,24 @@ def define_object(name, args):
 
 # ─── /chat Command ─────────────────────────────────────────────────────────
 def execute_chat(arg):
-    """Handle /chat output."""
     arg = arg.strip()
+
+    # Check if arg is a function call: /functionName args
+    if arg.startswith("/"):
+        parts = arg[1:].strip().split()
+        func_name = parts[0]
+        func_args = parts[1:] if len(parts) > 1 else []
+        result = execute_function(func_name, func_args)
+        if result is not None:
+            print(result)
+        return
 
     # String literal
     if arg.startswith('"') and arg.endswith('"'):
         print(arg.strip('"'))
+        return
 
-    # Object attribute e.g. greeter.name
+    # Object attribute
     elif "." in arg:
         obj_name, attr = arg.split(".")
         if obj_name in objects:
@@ -60,22 +75,33 @@ def execute_chat(arg):
     # Variable
     elif arg in variables:
         print(variables[arg])
+        return
 
     else:
         print(f"[Error] Unknown value: {arg}")
 
 # ─── Variable Declaration ──────────────────────────────────────────────────
 def execute_carry(args):
-    """Handle Steve.carry(identifier, value or expression)"""
     parts = [a.strip() for a in args.split(",", 1)]
     identifier = parts[0]
     expression = parts[1].strip()
+
+    # Check if expression is a function call: /functionName args
+    func_call = re.match(r'^/([a-zA-Z]+)\s*(.*)?$', expression)
+    if func_call:
+        func_name = func_call.group(1)
+        func_args = func_call.group(2).strip().split() if func_call.group(2).strip() else []
+        result = execute_function(func_name, func_args)
+        if result is not None:
+            variables[identifier] = result
+            if "Steve" in objects and identifier in objects["Steve"]:
+                objects["Steve"][identifier] = result
+        return
 
     # Replace variables in expression with their values
     for var, val in variables.items():
         expression = re.sub(rf'\b{var}\b', str(val), expression)
 
-    # Replace object attributes in expression
     def replace_attr(match):
         obj_name = match.group(1)
         attr = match.group(2)
@@ -88,27 +114,8 @@ def execute_carry(args):
     try:
         value = int(eval(expression))
         variables[identifier] = value
-
-        # Sync Steve's object attributes if identifier matches
         if "Steve" in objects and identifier in objects["Steve"]:
             objects["Steve"][identifier] = value
-
-    except Exception as e:
-        print(f"[Error] Could not evaluate expression: {expression} → {e}")
-
-    # Replace object attributes in expression
-    def replace_attr(match):
-        obj_name = match.group(1)
-        attr = match.group(2)
-        if obj_name in objects and attr in objects[obj_name]:
-            return str(objects[obj_name][attr])
-        return match.group(0)
-
-    expression = re.sub(r'([A-Z][a-zA-Z]*)\.([a-z]+)', replace_attr, expression)
-
-    try:
-        value = int(eval(expression))
-        variables[identifier] = value
     except Exception as e:
         print(f"[Error] Could not evaluate expression: {expression} → {e}")
 
@@ -182,34 +189,46 @@ def define_function(name, params, body):
     }
 
 def execute_function(name, args):
-    """Execute a stored function with given arguments."""
     if name not in functions:
         print(f"[Error] Unknown function: {name}")
-        return
+        return None
 
     func = functions[name]
     params = func["params"]
     body = func["body"]
 
-    # Map parameter names to argument values
-    local_objects = {}
+    # Save original state
+    original_objects = objects.copy()
+    original_variables = variables.copy()
+
+    # Map parameters to arguments in both objects and variables
     for param, arg in zip(params, args):
         if arg in objects:
-            local_objects[param] = objects[arg]
+            objects[param] = objects[arg]
         elif arg in variables:
-            local_objects[param] = variables[arg]
+            variables[param] = variables[arg]
+            objects[param] = {"value": variables[arg]}
         else:
-            local_objects[param] = arg
+            try:
+                val = int(arg)
+                variables[param] = val
+                objects[param] = {"value": val}
+            except ValueError:
+                variables[param] = arg
 
-    # Temporarily add local mappings to objects
-    original_objects = objects.copy()
-    objects.update(local_objects)
+    return_val = None
+    try:
+        run(body)
+    except ReturnException as e:
+        return_val = e.value
+    finally:
+        # Restore original state
+        objects.clear()
+        objects.update(original_objects)
+        variables.clear()
+        variables.update(original_variables)
 
-    run(body)
-
-    # Restore original objects
-    objects.clear()
-    objects.update(original_objects)
+    return return_val
 
 # ─── Line Parser ───────────────────────────────────────────────────────────
 def parse_line(line):
@@ -280,6 +299,34 @@ def parse_line(line):
     if random_match:
         identifier = random_match.group(1)
         variables[identifier] = random.randint(1, 10)
+        return
+    
+    # /return value
+    return_match = re.match(r'^/return\s+(.+)$', line)
+    if return_match:
+        expr = return_match.group(1).strip()
+        
+        # Replace variables
+        for var, val in variables.items():
+            expr = re.sub(rf'\b{var}\b', str(val), expr)
+        
+        # Replace object attributes
+        def replace_attr(match):
+            obj_name = match.group(1)
+            attr = match.group(2)
+            if obj_name in objects and attr in objects[obj_name]:
+                return str(objects[obj_name][attr])
+            return match.group(0)
+        
+        expr = re.sub(r'([A-Z][a-zA-Z]*)\.([a-z]+)', replace_attr, expr)
+        
+        try:
+            value = eval(expr)
+            raise ReturnException(value)
+        except ReturnException:
+            raise
+        except Exception as e:
+            print(f"[Error] Could not evaluate return expression: {expr} → {e}")
         return
 
 # ─── Block Extractor ───────────────────────────────────────────────────────
